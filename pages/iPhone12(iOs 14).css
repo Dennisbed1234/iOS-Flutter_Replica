@@ -2799,3 +2799,840 @@ body a {
 	color: black;
 	font-weight:bold;
 }
+
+/* =========================================================
+   iPHONE 14 PRO MAX / iOS 26 VISUAL OVERRIDE
+   ADD THIS AT THE VERY END OF:
+   pages/iPhone12(iOs 14).css
+
+   Existing CSS + JavaScript remain untouched.
+   ========================================================= */
+
+:root {
+  --ios26-radius: 42px;
+  --ios26-glass: rgba(255,255,255,.18);
+  --ios26-glass-border: rgba(255,255,255,.24);
+  --ios26-shadow: 0 24px 70px rgba(0,0,0,.45);
+}
+
+/* ---------------------------------------------------------
+   MAIN PHONE
+   --------------------------------------------------------- */
+
+.iphoneMock {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.iphoneMock .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.iphone {
+  width: min(430px, 92vw);
+  height: min(932px, 92vh);
+  max-width: 430px;
+  max-height: 932px;
+  border-radius: 48px;
+  overflow: hidden;
+  position: relative;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,.08),
+    0 20px 80px rgba(0,0,0,.55);
+}
+
+/* ---------------------------------------------------------
+   PHONE FRAME
+   --------------------------------------------------------- */
+
+.iphone .borderColor {
+  width: 100%;
+  height: 100%;
+  border-radius: 48px;
+  overflow: hidden;
+  position: relative;
+  background:
+    linear-gradient(
+      145deg,
+      #e5e5e7 0%,
+      #9b9ba0 18%,
+      #4d4d52 50%,
+      #bdbdc2 82%,
+      #eeeeef 100%
+    );
+  padding: 3px;
+}
+
+.iphone .blackBorder {
+  width: 100%;
+  height: 100%;
+  border-radius: 45px;
+  overflow: hidden;
+  position: relative;
+  background: #000;
+}
+
+/* ---------------------------------------------------------
+   SCREEN
+   --------------------------------------------------------- */
+
+.mainScreen {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 45px;
+  background:
+    radial-gradient(
+      circle at 50% 15%,
+      rgba(100,120,255,.22),
+      transparent 35%
+    ),
+    linear-gradient(
+      160deg,
+      #11121c 0%,
+      #08090d 45%,
+      #030305 100%
+    );
+}
+
+/* ---------------------------------------------------------
+   DYNAMIC ISLAND
+   Uses the existing .notch element.
+   --------------------------------------------------------- */
+
+.notch {
+  position: absolute !important;
+  z-index: 9999 !important;
+  top: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+
+  width: 126px !important;
+  height: 36px !important;
+
+  border-radius: 22px !important;
+  background: #000 !important;
+
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow:
+    0 1px 4px rgba(255,255,255,.08),
+    0 4px 15px rgba(0,0,0,.45);
+
+  transition:
+    width .35s ease,
+    height .35s ease,
+    border-radius .35s ease;
+}
+
+.notch .megaphone,
+.notch .camera {
+  position: absolute;
+}
+
+.notch .camera {
+  right: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #101014;
+  box-shadow:
+    inset 0 0 0 2px #17171b,
+    0 0 4px rgba(70,100,255,.45);
+}
+
+.notch .megaphone {
+  left: 17px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #080808;
+}
+
+/* Preserve the original hidden logo element */
+.blackBorder > .logo {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------
+   STATUS BAR
+   --------------------------------------------------------- */
+
+.statusBar {
+  position: absolute !important;
+  z-index: 9000 !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 58px !important;
+
+  padding: 0 22px !important;
+  box-sizing: border-box;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  color: #fff;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  pointer-events: none;
+}
+
+.statusBar .leftSide,
+.statusBar .rightSide {
+  display: flex;
+  align-items: center;
+}
+
+.statusBar .leftSide {
+  gap: 7px;
+}
+
+.statusBar .rightSide {
+  gap: 6px;
+}
+
+.statusBar .operator {
+  display: none !important;
+}
+
+.statusBar .hour {
+  color: #fff !important;
+  font-weight: 600;
+}
+
+.statusBar .data {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #fff !important;
+  margin-left: 2px;
+}
+
+/* ---------------------------------------------------------
+   5G
+   --------------------------------------------------------- */
+
+.statusBar .data::after {
+  content: "5G";
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.statusBar .data {
+  font-size: 0 !important;
+}
+
+/* ---------------------------------------------------------
+   SIGNAL
+   --------------------------------------------------------- */
+
+.statusBar .signal {
+  width: 17px !important;
+  height: 13px !important;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.statusBar .signal::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  width: 3px;
+  height: 4px;
+
+  border-radius: 2px;
+  background: #fff;
+
+  box-shadow:
+    5px -2px 0 #fff,
+    10px -5px 0 #fff,
+    15px -8px 0 #fff;
+}
+
+.statusBar .signal .bar {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------
+   BATTERY
+   --------------------------------------------------------- */
+
+.statusBar .battery {
+  width: 25px !important;
+  height: 12px !important;
+  position: relative;
+  margin-left: 2px;
+}
+
+.statusBar .battery .shell {
+  width: 23px !important;
+  height: 11px !important;
+  border: 1.5px solid rgba(255,255,255,.9);
+  border-radius: 3px;
+  padding: 1px;
+  box-sizing: border-box;
+  background: transparent;
+}
+
+.statusBar .battery .percent {
+  height: 100% !important;
+  width: 65% !important;
+  border-radius: 1.5px;
+  background: #fff !important;
+}
+
+.statusBar .battery .lead {
+  position: absolute;
+  right: -3px;
+  top: 4px;
+  width: 2px;
+  height: 4px;
+  border-radius: 0 2px 2px 0;
+  background: rgba(255,255,255,.9);
+}
+
+.statusBar .battery .percent-value {
+  display: none !important;
+}
+
+/* ---------------------------------------------------------
+   LOCK SCREEN
+   --------------------------------------------------------- */
+
+.lockScreen {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100%;
+  height: 100%;
+
+  color: #fff;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  background:
+    radial-gradient(
+      circle at 50% 20%,
+      rgba(70,90,180,.35),
+      transparent 42%
+    ),
+    linear-gradient(
+      160deg,
+      #10172e 0%,
+      #070b18 45%,
+      #020306 100%
+    );
+}
+
+/* ---------------------------------------------------------
+   LOCK SCREEN TIME
+   --------------------------------------------------------- */
+
+.lockScreen .up {
+  position: absolute;
+  top: 105px;
+  left: 0;
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  text-align: center;
+}
+
+.lockScreen .lockIcon {
+  margin-bottom: 18px;
+  transform: scale(1.15);
+}
+
+.lockScreen .hour {
+  font-size: clamp(72px, 18vw, 92px) !important;
+  line-height: .95;
+  font-weight: 300 !important;
+  letter-spacing: -4px;
+
+  color: #fff;
+
+  text-shadow:
+    0 2px 20px rgba(0,0,0,.35);
+}
+
+.lockScreen .date {
+  margin-top: 13px;
+
+  font-size: 18px !important;
+  line-height: 1.2;
+
+  font-weight: 500;
+
+  color: rgba(255,255,255,.96);
+}
+
+/* ---------------------------------------------------------
+   LOCK SCREEN BOTTOM CONTROLS
+   --------------------------------------------------------- */
+
+.lockScreen .down {
+  position: absolute !important;
+  bottom: 72px !important;
+  left: 0 !important;
+  width: 100% !important;
+
+  display: flex !important;
+  justify-content: space-between !important;
+
+  padding: 0 32px !important;
+  box-sizing: border-box;
+}
+
+.lockScreen .sysIcon {
+  width: 52px !important;
+  height: 52px !important;
+
+  border-radius: 50% !important;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(30,30,35,.72) !important;
+
+  border: 1px solid rgba(255,255,255,.15);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 8px 25px rgba(0,0,0,.25);
+}
+
+/* ---------------------------------------------------------
+   SWIPE UP INDICATOR
+   --------------------------------------------------------- */
+
+.unlockBar {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+
+  width: 135px !important;
+  height: 5px !important;
+
+  border-radius: 10px !important;
+
+  background: rgba(255,255,255,.88) !important;
+
+  box-shadow:
+    0 1px 7px rgba(0,0,0,.5);
+
+  font-size: 0 !important;
+}
+
+.unlockBar::before {
+  content: "Swipe up to unlock";
+
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 180px;
+
+  text-align: center;
+
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "SF Pro Display",
+    "Helvetica Neue",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+  font-weight: 500;
+
+  color: rgba(255,255,255,.72);
+}
+
+/* ---------------------------------------------------------
+   HOME SCREEN
+   --------------------------------------------------------- */
+
+.appScreen {
+  position: absolute !important;
+  inset: 0 !important;
+
+  padding-top: 72px !important;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 30% 20%,
+      rgba(75,110,255,.30),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 80% 75%,
+      rgba(160,70,255,.20),
+      transparent 35%
+    ),
+    linear-gradient(
+      145deg,
+      #182b55 0%,
+      #0c1731 40%,
+      #05070f 100%
+    );
+}
+
+/* ---------------------------------------------------------
+   APP GRID
+   --------------------------------------------------------- */
+
+.mainApps {
+  width: 100% !important;
+  padding: 0 18px !important;
+  box-sizing: border-box;
+}
+
+.wrapperApps {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(4, 1fr) !important;
+
+  gap: 20px 14px !important;
+
+  width: 100%;
+}
+
+/* ---------------------------------------------------------
+   APP ICONS
+   --------------------------------------------------------- */
+
+.wrapperApps .app,
+.deckApps .app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.wrapperApps .icon,
+.deckApps .icon {
+  width: 58px !important;
+  height: 58px !important;
+
+  border-radius: 14px !important;
+
+  background-size: cover !important;
+  background-position: center !important;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,.28);
+
+  transition:
+    transform .18s ease,
+    filter .18s ease;
+}
+
+.wrapperApps .app:active .icon,
+.deckApps .app:active .icon {
+  transform: scale(.88);
+  filter: brightness(.82);
+}
+
+/* ---------------------------------------------------------
+   HOME SCREEN DOCK
+   --------------------------------------------------------- */
+
+.deckApps {
+  position: absolute !important;
+
+  bottom: 18px !important;
+  left: 12px !important;
+  right: 12px !important;
+
+  height: 86px !important;
+
+  padding: 13px 9px !important;
+
+  box-sizing: border-box;
+
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 8px !important;
+
+  border-radius: 29px !important;
+
+  background: rgba(255,255,255,.17) !important;
+
+  border: 1px solid rgba(255,255,255,.16);
+
+  backdrop-filter: blur(28px) saturate(150%);
+  -webkit-backdrop-filter: blur(28px) saturate(150%);
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.25);
+}
+
+.deckApps .icon {
+  width: 60px !important;
+  height: 60px !important;
+  border-radius: 15px !important;
+}
+
+/* ---------------------------------------------------------
+   HOME SCREEN DOTS
+   --------------------------------------------------------- */
+
+.wrapperDots {
+  position: absolute !important;
+  bottom: 116px !important;
+  left: 50% !important;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 6px;
+}
+
+.wrapperDots > * {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.45);
+}
+
+/* ---------------------------------------------------------
+   WIDGET / SEARCH
+   --------------------------------------------------------- */
+
+.widgetCenter {
+  position: absolute !important;
+  inset: 0 !important;
+
+  padding: 80px 16px 20px !important;
+  box-sizing: border-box;
+
+  background:
+    rgba(10,12,20,.55) !important;
+
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+
+  z-index: 8000;
+}
+
+.widgetCenter .seeker {
+  height: 48px !important;
+
+  border-radius: 18px !important;
+
+  background: rgba(255,255,255,.14) !important;
+
+  border: 1px solid rgba(255,255,255,.15);
+
+  color: rgba(255,255,255,.85);
+
+  display: flex;
+  align-items: center;
+
+  padding: 0 16px !important;
+
+  box-sizing: border-box;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* ---------------------------------------------------------
+   GLASS WIDGET BLOCKS
+   --------------------------------------------------------- */
+
+.widgetCenter .block {
+  border-radius: 22px !important;
+
+  background: rgba(255,255,255,.12) !important;
+
+  border: 1px solid rgba(255,255,255,.13);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.16);
+
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   CONTROL CENTER
+   --------------------------------------------------------- */
+
+.controlCenter {
+  position: absolute !important;
+  inset: 0 !important;
+
+  z-index: 8500 !important;
+
+  background:
+    rgba(12,14,20,.58) !important;
+
+  backdrop-filter: blur(35px) saturate(150%);
+  -webkit-backdrop-filter: blur(35px) saturate(150%);
+
+  color: #fff;
+}
+
+.controlCenter .content {
+  padding: 72px 15px 20px !important;
+  box-sizing: border-box;
+}
+
+/* Control Center cards */
+
+.controlCenter .iconWrapper-wX2,
+.controlCenter .musicWdg,
+.controlCenter .displayOptions,
+.controlCenter .fullBars {
+  border-radius: 24px !important;
+
+  background: rgba(255,255,255,.14) !important;
+
+  border: 1px solid rgba(255,255,255,.14);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 12px 30px rgba(0,0,0,.16);
+}
+
+/* ---------------------------------------------------------
+   BUTTONS / SIDE HARDWARE
+   --------------------------------------------------------- */
+
+.buttons .switch,
+.buttons .vol,
+.buttons .touchID {
+  border-radius: 5px;
+}
+
+/* iPhone 14 has no Touch ID.
+   Keep element for JavaScript compatibility but hide it. */
+
+.buttons .touchID {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* ---------------------------------------------------------
+   SMOOTHNESS
+   --------------------------------------------------------- */
+
+.mainScreen,
+.lockScreen,
+.appScreen,
+.widgetCenter,
+.controlCenter {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ---------------------------------------------------------
+   HIDE OLD DEMO INFORMATION ON SMALL SCREENS
+   --------------------------------------------------------- */
+
+@media (max-width: 700px) {
+  .interactionInfo {
+    display: none !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE PHONE
+   --------------------------------------------------------- */
+
+@media (max-height: 850px) {
+  .iphone {
+    width: min(390px, 88vw);
+    height: min(844px, 94vh);
+    border-radius: 44px;
+  }
+
+  .iphone .borderColor {
+    border-radius: 44px;
+  }
+
+  .iphone .blackBorder,
+  .mainScreen,
+  .lockScreen {
+    border-radius: 41px;
+  }
+
+  .lockScreen .up {
+    top: 90px;
+  }
+
+  .lockScreen .hour {
+    font-size: 72px !important;
+  }
+
+  .wrapperApps .icon {
+    width: 54px !important;
+    height: 54px !important;
+  }
+
+  .deckApps .icon {
+    width: 56px !important;
+    height: 56px !important;
+  }
+}
+
+/* ---------------------------------------------------------
+   PREVENT PAGE SCROLLING
+   --------------------------------------------------------- */
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+  background: #000;
+}
