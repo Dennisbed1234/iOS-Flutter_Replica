@@ -202,67 +202,128 @@ $(function(){
   //Extended Functions
   $.fn.extend({
     touchMov: function(config){
-      config = jQuery.extend({
-        mov: 'x',
-        movLeft: function(){},
-        movRight: function(){},
-        movUp: function(){},
-        movDown: function(){},
-        updateMovX: function(){},
-        updateMovY: function(){},
-        finishMov: function(){}
-      }, config);
-      let el = this;
-      let initCoords = { x: 0, y: 0 };
-      let movCoords = { x: 0, y: 0 };
-      let downCoords = { x: 0, y: 0 };
-      el.mousedown(function (e) {
-        initCoords = { x: e.pageX, y: e.pageY };
-        downCoords = { x: movCoords.x, y: movCoords.y };
-        el.mousemove(function (e2) {
-          globalState.draggScreen = true;
-          movCoords = { x: e2.pageX, y: e2.pageY };
-          if (config.mov === 'x') {
-            config.updateMovX(e2, (movCoords.x - initCoords.x))
-          } else if (config.mov === 'y') {
-            config.updateMovY(e2, (movCoords.y - initCoords.y))
-          }
-        })
-        el.mouseup(function (ex) {
-          if (config.mov === 'x') {
-            if (movCoords.x - downCoords.x != 0) {
-              (movCoords.x - initCoords.x) > 0 ? config.movRight(ex) : config.movLeft(ex);
-            }
-          } else if (config.mov === 'y') {
-            if (movCoords.y - downCoords.y != 0) {
-              (movCoords.y - initCoords.y) > 0 ? config.movDown(ex) : config.movUp(ex);
-            }
-          }
-          globalState.draggScreen = false;
-          config.finishMov(ex);
-          el.off('mousemove');
-          el.off('mouseup');
-          el.off('mouseleave');
-        })
-        el.mouseleave(function (a) {
-          if (config.mov === 'x') {
-            if (movCoords.x - downCoords.x != 0) {
-              (movCoords.x - initCoords.x) > 0 ? config.movRight(a) : config.movLeft(a);
-            }
-          } else if (config.mov === 'y') {
-            if (movCoords.y - downCoords.y != 0) {
-              (movCoords.y - initCoords.y) > 0 ? config.movDown(a) : config.movUp(a);
-            }
-          }
-          globalState.draggScreen = false;
-          config.finishMov(a);
-          el.off('mousemove');
-          el.off('mouseup');
-          el.off('mouseleave');
-        })
-      })
-      return this;
-    },
+  config = jQuery.extend({
+    mov: 'x',
+    movLeft: function(){},
+    movRight: function(){},
+    movUp: function(){},
+    movDown: function(){},
+    updateMovX: function(){},
+    updateMovY: function(){},
+    finishMov: function(){}
+  }, config);
+
+  let el = this;
+  let initCoords = { x: 0, y: 0 };
+  let movCoords = { x: 0, y: 0 };
+  let touchActive = false;
+
+  function startMove(x, y) {
+    initCoords = { x: x, y: y };
+    movCoords = { x: x, y: y };
+    globalState.draggScreen = false;
+  }
+
+  function move(x, y, event) {
+    movCoords = { x: x, y: y };
+    globalState.draggScreen = true;
+
+    if (config.mov === 'x') {
+      config.updateMovX(event, movCoords.x - initCoords.x);
+    } else if (config.mov === 'y') {
+      config.updateMovY(event, movCoords.y - initCoords.y);
+    }
+  }
+
+  function finish(event) {
+    const deltaX = movCoords.x - initCoords.x;
+    const deltaY = movCoords.y - initCoords.y;
+
+    if (config.mov === 'x') {
+      if (deltaX !== 0) {
+        if (deltaX > 0) {
+          config.movRight(event);
+        } else {
+          config.movLeft(event);
+        }
+      }
+    } else if (config.mov === 'y') {
+      if (deltaY !== 0) {
+        if (deltaY > 0) {
+          config.movDown(event);
+        } else {
+          config.movUp(event);
+        }
+      }
+    }
+
+    globalState.draggScreen = false;
+    config.finishMov(event);
+  }
+
+  // Mouse support
+  el.on('mousedown', function(e) {
+    if (touchActive) return;
+
+    startMove(e.pageX, e.pageY);
+
+    el.on('mousemove.touchMovMouse', function(e2) {
+      move(e2.pageX, e2.pageY, e2);
+    });
+
+    el.on('mouseup.touchMovMouse', function(e2) {
+      finish(e2);
+      el.off('.touchMovMouse');
+    });
+
+    el.on('mouseleave.touchMovMouse', function(e2) {
+      finish(e2);
+      el.off('.touchMovMouse');
+    });
+  });
+
+  // Touch support for iPhone / Android
+  el.on('touchstart', function(e) {
+    const touch = e.originalEvent.touches[0];
+
+    if (!touch) return;
+
+    touchActive = true;
+
+    startMove(touch.pageX, touch.pageY);
+  });
+
+  el.on('touchmove', function(e) {
+    const touch = e.originalEvent.touches[0];
+
+    if (!touch || !touchActive) return;
+
+    move(touch.pageX, touch.pageY, e);
+
+    if (e.cancelable) {
+      e.preventDefault();
+    }
+  });
+
+  el.on('touchend', function(e) {
+    if (!touchActive) return;
+
+    finish(e);
+
+    touchActive = false;
+  });
+
+  el.on('touchcancel', function(e) {
+    if (!touchActive) return;
+
+    globalState.draggScreen = false;
+    config.finishMov(e);
+
+    touchActive = false;
+  });
+
+  return this;
+},
     calendar: function(config){
       config = jQuery.extend({
         date: new Date(),
